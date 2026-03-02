@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', 'Poppins', system-ui, sans-serif;
+    color: #1A1A1A;
+    background-color: #F8F9FA;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1 { @apply text-h1; }
+  h2 { @apply text-h2; }
+  h3 { @apply text-h3; }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white font-semibold py-3 px-6 rounded-button 
+           hover:bg-primary-dark transition-all duration-300 
+           shadow-button hover:shadow-lg active:scale-[0.98];
+  }
+
+  .btn-secondary {
+    @apply bg-coral text-white font-semibold py-3 px-6 rounded-button 
+           hover:bg-coral-dark transition-all duration-300 
+           hover:shadow-lg active:scale-[0.98];
+  }
+
+  .btn-outline {
+    @apply bg-transparent border-2 border-primary text-primary font-semibold 
+           py-3 px-6 rounded-button hover:bg-primary hover:text-white 
+           transition-all duration-300 active:scale-[0.98];
+  }
+
+  .btn-coral-outline {
+    @apply bg-transparent border-2 border-coral text-coral font-semibold 
+           py-3 px-6 rounded-button hover:bg-coral hover:text-white 
+           transition-all duration-300 active:scale-[0.98];
+  }
+
+  .card {
+    @apply bg-white rounded-card shadow-card hover:shadow-card-hover 
+           transition-all duration-300 p-6;
+  }
+
+  .input-field {
+    @apply w-full border border-border rounded-button py-3 px-4 
+           text-text-primary placeholder:text-text-secondary 
+           focus:outline-none focus:ring-2 focus:ring-primary/30 
+           focus:border-primary transition-all duration-200;
+  }
+
+  .section-padding {
+    @apply py-16 md:py-24 px-4 md:px-8;
+  }
+
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 md:px-8;
+  }
+
+  .gradient-primary {
+    @apply bg-gradient-to-r from-primary to-primary-dark;
+  }
+
+  .gradient-coral {
+    @apply bg-gradient-to-r from-coral to-coral-dark;
+  }
+
+  /* Animations */
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
+  }
+
+  .animate-slide-in-left {
+    animation: slideInLeft 0.6s ease-out forwards;
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.6s ease-out forwards;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F8F9FA;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2A9D8F;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1F7F73;
+}
+
+/* Calendar styles */
+.calendar-day {
+  @apply w-8 h-8 flex items-center justify-center rounded-full 
+         cursor-pointer transition-all duration-200;
+}
+
+.calendar-day:hover {
+  @apply bg-primary-50;
+}
+
+.calendar-day.selected {
+  @apply bg-coral text-white;
+}
+
+.calendar-day.today {
+  @apply bg-primary text-white;
+}
+
+/* Sidebar active link */
+.sidebar-link {
+  @apply flex items-center gap-3 px-4 py-3 rounded-lg text-text-secondary 
+         hover:text-primary hover:bg-primary-50 transition-all duration-200;
+}
+
+.sidebar-link.active {
+  @apply text-white bg-primary font-semibold;
+}
+
+/* Time slot styles */
+.time-slot {
+  @apply px-4 py-2 rounded-lg border border-border text-sm font-medium 
+         cursor-pointer transition-all duration-200 hover:border-primary 
+         hover:text-primary;
+}
+
+.time-slot.selected {
+  @apply bg-coral text-white border-coral;
+}
+
+/* Star rating */
+.star-filled {
+  color: #F59E0B;
+}

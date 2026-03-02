@@ -1,0 +1,113 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  role      String   @default("PACIENTE") // PACIENTE, MEDICO, ADMIN
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  patient ProfilePaciente?
+  doctor  ProfileMedico?
+}
+
+model ProfilePaciente {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  nome      String
+  cpf       String   @unique
+  telefone  String?
+  dataNasc  DateTime?
+  
+  agendamentos Agendamento[]
+  prontuarios  Prontuario[]
+  exames       Exame[]
+}
+
+model ProfileMedico {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  nome      String
+  crm       String   @unique
+  especialidade String
+  bio         String?
+  precoConsulta Float @default(150.0)
+
+  agendamentos Agendamento[]
+  prontuarios  Prontuario[]
+}
+
+model Servico {
+  id          String   @id @default(cuid())
+  nome        String
+  categoria   String
+  descricao   String
+  beneficios  String?
+  comoFunciona String?
+  precoBase   Float    @default(0)
+  duracaoMin  Int      @default(30)
+  
+  agendamentos Agendamento[]
+}
+
+model Agendamento {
+  id          String   @id @default(cuid())
+  pacienteId  String
+  paciente    ProfilePaciente @relation(fields: [pacienteId], references: [id])
+  medicoId    String
+  medico      ProfileMedico   @relation(fields: [medicoId], references: [id])
+  servicoId   String?
+  servico     Servico?        @relation(fields: [servicoId], references: [id])
+  
+  dataHora    DateTime
+  status      String   @default("PENDENTE") // PENDENTE, CONFIRMADO, CANCELADO, REALIZADO
+  valorTotal  Float
+  
+  pagamento   Pagamento?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Pagamento {
+  id            String   @id @default(cuid())
+  agendamentoId String   @unique
+  agendamento   Agendamento @relation(fields: [agendamentoId], references: [id])
+  valor         Float
+  metodo        String   // PIX, CARTAO, BOLETO
+  status        String   @default("PENDENTE") // PENDENTE, PAGO, CANCELADO
+  dataPgto      DateTime?
+  comprovanteUrl String?
+}
+
+model Prontuario {
+  id          String   @id @default(cuid())
+  pacienteId  String
+  paciente    ProfilePaciente @relation(fields: [pacienteId], references: [id])
+  medicoId    String
+  medico      ProfileMedico   @relation(fields: [medicoId], references: [id])
+  
+  dataConsulta DateTime @default(now())
+  observacoes  String
+  diagnostico  String?
+  prescricao   String?
+}
+
+model Exame {
+  id          String   @id @default(cuid())
+  pacienteId  String
+  paciente    ProfilePaciente @relation(fields: [pacienteId], references: [id])
+  nomeExame   String
+  dataExame   DateTime
+  resultadoUrl String
+  observacoes String?
+}
