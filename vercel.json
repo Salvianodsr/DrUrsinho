@@ -1,0 +1,7 @@
+{
+    "github": {
+        "enabled": true
+    },
+    "installCommand": "npm install",
+    "buildCommand": "npx prisma generate && next build"
+}
