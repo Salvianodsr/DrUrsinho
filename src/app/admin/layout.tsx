@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { LayoutDashboard, Users, Stethoscope, Briefcase, CalendarClock, DollarSign, Settings, LogOut } from 'lucide-react';
+import { LayoutDashboard, Users, Users2, Stethoscope, Briefcase, CalendarClock, DollarSign, Settings, LogOut } from 'lucide-react';
 
 export default function AdminLayout({
     children,
@@ -15,6 +15,7 @@ export default function AdminLayout({
         { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
         { name: 'Pacientes', href: '/admin/pacientes', icon: Users },
         { name: 'Médicos', href: '/admin/medicos', icon: Stethoscope },
+        { name: 'Equipe do Site', href: '/admin/equipe', icon: Users2 },
         { name: 'Serviços', href: '/admin/servicos', icon: Briefcase },
         { name: 'Agendamentos', href: '/admin/agendamentos', icon: CalendarClock },
         { name: 'Financeiro', href: '/admin/financeiro', icon: DollarSign },
